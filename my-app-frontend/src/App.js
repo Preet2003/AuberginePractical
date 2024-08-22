@@ -25,7 +25,7 @@ const App = () => {
     return (
         <div>
             <Navbar onSearch={handleSearch} />
-            <div className="card-container">
+            <div className="card-container" style={gridContainerStyle}>
                 {filteredUniversities.length > 0 ? (
                     filteredUniversities.map((university, index) => (
                         <Card key={index} university={university} />
@@ -36,6 +36,13 @@ const App = () => {
             </div>
         </div>
     );
+};
+
+const gridContainerStyle = {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
+    gap: '20px',
+    padding: '20px',
 };
 
 export default App;
