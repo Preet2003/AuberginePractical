@@ -1,38 +1,27 @@
-import React from 'react';
-import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React, { useState } from 'react';
 
-const Navbar = () => {
+const Navbar = ({ onSearch }) => {
+    const [searchQuery, setSearchQuery] = useState('');
 
-    
+    const handleInputChange = (event) => {
+        setSearchQuery(event.target.value);
+    };
+
+    const handleSearch = () => {
+        onSearch(searchQuery);
+    };
+
     return (
-        <>
-            <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                <div className="container-fluid">
-                    <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                        <form className="d-flex">
-                            <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                            <button className="btn btn-outline-success" type="submit">Search</button>
-                        </form>
-                        <ul className="navbar-nav me-auto mb-2 mb-lg-0" style={{marginLeft:'800px'}}>
-                            <li className="nav-item dropdown">
-                                <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Dropdown
-                                </a>
-                                <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li><a className="dropdown-item" href="#">Action</a></li>
-                                    <li><a className="dropdown-item" href="#">Another action</a></li>
-                                    <li><hr className="dropdown-divider" /></li>
-                                    <li><a className="dropdown-item" href="#">Something else here</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-        </>
+        <nav>
+            <input
+                type="text"
+                placeholder="Type a country name"
+                value={searchQuery}
+                onChange={handleInputChange}
+            />
+            <button onClick={handleSearch}>Search</button>
+        </nav>
     );
 };
 
 export default Navbar;
-
