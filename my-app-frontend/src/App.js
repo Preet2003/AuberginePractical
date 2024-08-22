@@ -1,22 +1,37 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Card from './components/Card';
-import universitiesData from './world_universities_and_domains.json'; // Your JSON data file
 
 const App = () => {
     const [filteredUniversities, setFilteredUniversities] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
+    const [data, setData] = useState([]);
+
+    const getData = async () => {
+        try {
+            const response = await fetch('http://universities.hipolabs.com/search?name=middle');
+            console.log(response);
+            const myJson = await response.json();
+            setData(myJson);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+
+    useEffect(() => {
+        getData();
+    }, []);
 
     useEffect(() => {
         if (searchQuery) {
-            const filtered = universitiesData.filter(university =>
+            const filtered = data.filter(university=>
                 university.country.toLowerCase().includes(searchQuery.toLowerCase())
             );
             setFilteredUniversities(filtered);
         } else {
             setFilteredUniversities([]);
         }
-    }, [searchQuery]);
+    }, [searchQuery, data]);
 
     const handleSearch = (query) => {
         setSearchQuery(query);
